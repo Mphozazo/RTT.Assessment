@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.89" />
+    <PackageReference Include="Dapper.Contrib.Extensions.Tablename" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RTT.Assessment.Application\RTT.Assessment.Application.csproj" />
+    <ProjectReference Include="..\RTT.Assessment.Domain\RTT.Assessment.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/API/">
+    <Project Path="RTT.Assessment.WebApi/RTT.Assessment.WebApi.csproj" Id="f99cae64-9b17-4350-898d-7602bbfc625d" />
+  </Folder>
+  <Folder Name="/Core/">
+    <Project Path="RTT.Assessment.Application/RTT.Assessment.Application.csproj" />
+    <Project Path="RTT.Assessment.Domain/RTT.Assessment.Domain.csproj" />
+  </Folder>
+  <Folder Name="/Files/" />
+  <Folder Name="/Files/DB/">
+    <File Path="SolutionFiles/DBScript.sql" />
+    <File Path="SolutionFiles/RTTAssessmentERD.jpg" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="RTT.Assessment.Infrastructure/RTT.Assessment.Infrastructure.csproj" Id="5aa05115-55ac-423d-87c0-f0c9742c0ddc" />
+    <Project Path="RTT.Assessment.Persistence/RTT.Assessment.Persistence.csproj" Id="0913d9e9-f37b-44ab-a662-65ba9dcfc7f0" />
+  </Folder>
+  <Folder Name="/Test/" />
+</Solution>
