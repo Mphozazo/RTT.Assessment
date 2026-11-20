@@ -1,5 +1,6 @@
 using RTT.Assessment.Application;
 using RTT.Assessment.Persistence;
+using RTT.Assessment.WebApi.Middleware;
 using Serilog;
 try
 {
@@ -34,10 +35,11 @@ try
     builder.Services.AddApplicationServiceRegistration();
     builder.Services.AddPersistenceServiceRegistration(builder.Configuration);
 
+   
     // Add services to the container.
     var app = builder.Build();
 
-
+    app.UseMiddleware<ExceptionMiddleware>();
     // Log each HTTP request (method, path, status code, duration)
     app.UseSerilogRequestLogging();
 

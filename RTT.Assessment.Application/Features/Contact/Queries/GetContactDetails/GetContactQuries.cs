@@ -2,8 +2,8 @@
 
 namespace RTT.Assessment.Application.Features.Contact.Queries.GetPersonContactDetails
 {
-    public class GetPersonContactQueries : IRequest<IEnumerable<ContactDto>>
+    public class GetContactDetailsQueries : IRequest<ContactDto>
     {
-        public int PersonId { get; set; }
+        public int Id { get; set; }
     }
 }

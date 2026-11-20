@@ -24,11 +24,10 @@ namespace RTT.Assessment.Application.Features.Person.Commands.CreatePerson
                 var validator = new CreatePersonCommandValidator();
                 var validationResult = await validator.ValidateAsync(request, cancellationToken);
                 if (validationResult.Errors.Any())
-                    throw new BadRequestException("Invalid Person Request", validationResult.Errors);
+                    throw new BadRequestException("Invalid Person Request", validationResult);
 
 
                 var person = _mapper.Map<Domain.Person>(request);
-
                 person = await _personRepository.AddAsync(person, cancellationToken);
 
                 return person.Id;

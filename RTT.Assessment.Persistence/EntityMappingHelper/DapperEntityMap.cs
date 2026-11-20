@@ -44,7 +44,8 @@ namespace RTT.Assessment.Persistence.EntityMappingHelper
             t = Nullable.GetUnderlyingType(t) ?? t;
             return t.IsPrimitive || t.IsEnum
                 || t == typeof(string) || t == typeof(decimal) || t == typeof(Guid)
-                || t == typeof(DateTime) || t == typeof(DateTimeOffset) || t == typeof(byte[]);
+                || t == typeof(DateTime) || t == typeof(DateTimeOffset)
+                || t == typeof(DateOnly) || t == typeof(byte[]);
         }
     }
 }

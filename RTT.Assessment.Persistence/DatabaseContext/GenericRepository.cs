@@ -14,6 +14,8 @@ namespace RTT.Assessment.Persistence.DatabaseContext
         public async Task<T> AddAsync(T entity, CancellationToken cancellationToken)
         {
             await using var conn = await _factory.CreateOpenConnectionAsync(cancellationToken);
+            entity.DateCreated = DateTime.UtcNow;
+            entity.DateUpdated = DateTime.UtcNow;
             entity.Id = await conn.QuerySingleAsync<int>(
                 new CommandDefinition(DapperEntityMap<T>.Insert, entity, cancellationToken: cancellationToken));
             return entity;
@@ -46,6 +48,7 @@ namespace RTT.Assessment.Persistence.DatabaseContext
         public async Task<T> UpdateAsync(T entity, CancellationToken cancellationToken)
         {
             await using var conn = await _factory.CreateOpenConnectionAsync(cancellationToken);
+            entity.DateUpdated = DateTime.UtcNow;
             await conn.ExecuteAsync(
                 new CommandDefinition(DapperEntityMap<T>.Update, entity, cancellationToken: cancellationToken));
             return entity;

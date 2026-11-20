@@ -27,11 +27,11 @@ namespace RTT.Assessment.Application.Features.Contact.Commands.CreateContact
                 var contactValidation = new CreateBaseContactCommandValidator(_personRepository);
                 var validationResult = await contactValidation.ValidateAsync(request, cancellationToken);
                 if (validationResult.Errors.Any())
-                    throw new BadRequestException("Invalid Contact Request", validationResult.Errors);
+                    throw new BadRequestException("Invalid Contact Request", validationResult);
 
 
                 var contact = _mapper.Map<Domain.Contact>(request);
-                contact.DateCreated = DateTime.UtcNow;
+                
 
                 await _contactRepository.AddAsync(contact, cancellationToken);
                 return contact.Id;
@@ -39,7 +39,7 @@ namespace RTT.Assessment.Application.Features.Contact.Commands.CreateContact
             catch (Exception ex)
             {
                 // log to Serilog file
-                throw new Exception("Error in CreateContactCommandHandler.Handle", ex);
+                throw ;
             }   
            
 

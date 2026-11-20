@@ -12,7 +12,6 @@ public class AddressDto
     public string? PostalCode { get; set; }
     public string? Country { get; set; }
     public int PersonId { get; set; }
-    public PersonDto? Person { get; set; }
     public enumAddressType AddressType { get; set; }
 
 }

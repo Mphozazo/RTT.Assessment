@@ -1,5 +1,9 @@
 ﻿using AutoMapper;
+using RTT.Assessment.Application.Features.Contact.Commands.CreateContact;
+using RTT.Assessment.Application.Features.Contact.Commands.UpdateContact;
 using RTT.Assessment.Application.Features.Contact.Queries;
+using RTT.Assessment.Application.Features.Person.Commands.CreatePerson;
+using RTT.Assessment.Application.Features.Person.Commands.UpdatePerson;
 using RTT.Assessment.Domain;
 using System;
 using System.Collections.Generic;
@@ -13,7 +17,9 @@ namespace RTT.Assessment.Application.MappingProfile
         {
             CreateMap<ContactDto, Contact>().ReverseMap();
 
-            // commands mapping
+            // Commands Mapping 
+            CreateMap<CreateContactCommand, Contact>();
+            CreateMap<UpdateContactCommand, Contact>();
         }
     }
 }

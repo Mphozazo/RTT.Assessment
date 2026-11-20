@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RTT.Assessment.Domain
 {
-    [Table("")]
+    [Table("Contacts")]
     public class Contact :BaseEntity
     {
         public string? Email { get; set; }

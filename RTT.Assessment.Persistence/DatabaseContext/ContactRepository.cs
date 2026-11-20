@@ -1,9 +1,6 @@
 ﻿using Dapper;
 using RTT.Assessment.Application.Contracts.Persistence;
 using RTT.Assessment.Domain;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RTT.Assessment.Persistence.DatabaseContext
 {

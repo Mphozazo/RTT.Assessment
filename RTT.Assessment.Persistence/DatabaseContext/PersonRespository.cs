@@ -10,7 +10,7 @@ namespace RTT.Assessment.Persistence.DatabaseContext
 
         public async Task<bool> PersonExistsAsync(int id, CancellationToken token)
         {
-            var sql = $"SELECT CASE WHEN EXISTS (SELECT 1 FROM Person WHERE [Id] = @id) THEN 1 ELSE 0 END";
+            var sql = $"SELECT CASE WHEN EXISTS (SELECT 1 FROM Persons WHERE [Id] = @id) THEN 1 ELSE 0 END";
 
             await using var conn = await _factory.CreateOpenConnectionAsync(token);
             return await conn.ExecuteScalarAsync<bool>(

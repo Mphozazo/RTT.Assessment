@@ -20,6 +20,8 @@ namespace RTT.Assessment.Application.Features.Person.Commands.UpdatePerson
         public async Task<bool> Handle(UpdatePersonCommand request, CancellationToken cancellationToken)
         {
             var person = _mapper.Map<Domain.Person>(request);
+            person.DateCreated = DateTime.UtcNow;
+            person.DateUpdated = DateTime.UtcNow;
             await _personRepository.UpdateAsync(person, cancellationToken);
             return true;
 

@@ -17,6 +17,7 @@ namespace RTT.Assessment.Application.Features.Person.Commands.CreatePerson
             RuleFor(p => p.Age)
                 .GreaterThan(0).WithMessage("{PropertyName} must be greater than 0.");
             RuleFor(p => p.DOB)
+                .NotEmpty().WithMessage("{PropertyName} is required.")
                 .LessThan(DateOnly.FromDateTime(DateTime.Now)).WithMessage("{PropertyName} must be a date in the past.");
         }
 

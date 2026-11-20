@@ -9,6 +9,8 @@ namespace RTT.Assessment.Application.Exceptions;
 public class BadRequestException : Exception
 {
     public IDictionary<string, string[]> validationErrorsDictionary { get; set; }
+
+
     public List<ValidationFailure> validationErrorsList { get; set; }
     public BadRequestException(string message, ValidationResult errors) : base(message)
     {
@@ -17,6 +19,7 @@ public class BadRequestException : Exception
 
     public BadRequestException(string message, List<ValidationFailure> errors) : this(message, new ValidationResult())
     {
+        validationErrorsList = new List<ValidationFailure>();
         foreach (var error in errors)
            validationErrorsList.Add(error);
     }

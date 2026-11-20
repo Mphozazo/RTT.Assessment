@@ -20,13 +20,10 @@ namespace RTT.Assessment.Application.Features.Contact.Commands.UpdateContact
         {
             var validationResult = await new UpdateContactCommandValidator().ValidateAsync(request, cancellationToken);
             if (validationResult.Errors.Any())
-                throw new BadRequestException("Update Contact failed", validationResult.Errors);
+                throw new BadRequestException("Update Contact failed", validationResult);
            
             var contact = await _contactRepository.GetByIdAsync(request.Id, cancellationToken);
-            contact.Email = request.Email;
-            contact.PhoneNumber = request.PhoneNumber;
-            contact.CellNumber = request.CellNumber;
-            contact.DateUpdated = DateTime.UtcNow;
+
             await _contactRepository.UpdateAsync(contact, cancellationToken);
 
             return Unit.Value;
