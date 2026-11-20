@@ -43,6 +43,5 @@ erDiagram
     datetime DateUpdated "NOT NULL"
   }
 
----
 ```
 
