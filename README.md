@@ -52,13 +52,6 @@ erDiagram
   - ⚡ ### Clean Pattern -
 
 ---
-## Todo
- - ⚡ ### Test Project - Not completed due to time constraints
- - ⚡ ### Person Report - Not completed due to time constraints but handler created only to output into xls outsanding
- - ⚡ ### Controller  - Not all controller end point be created such as address completed due to time constraints
- - ⚡ ### Logging  - Serilog has been setup but not implemented across application ( Handlers etc )
-
----
 ## How To Run
  - ⚡  Repository - Download the repository locally
  - ⚡  DB - DB scrip has been created and need to connect to localDB and run the scipt to generates table (db Name : RTTAssessment)
