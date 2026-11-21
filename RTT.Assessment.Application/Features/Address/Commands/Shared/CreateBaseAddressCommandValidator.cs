@@ -1,12 +1,9 @@
 ﻿using FluentValidation;
 using RTT.Assessment.Application.Features.Address.Commands.CreateAddress;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RTT.Assessment.Application.Features.Address.Commands.Shared
 {
-    internal class CreateBaseAddressCommandValidator : AbstractValidator<CreateAddressCommand>
+    internal class CreateBaseAddressCommandValidator : AbstractValidator<BaseAddressCommand>
     {
         public CreateBaseAddressCommandValidator()
         {

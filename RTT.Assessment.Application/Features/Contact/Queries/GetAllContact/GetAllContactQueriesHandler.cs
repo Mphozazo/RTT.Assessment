@@ -1,30 +1,26 @@
 ﻿using AutoMapper;
 using MediatR;
 using RTT.Assessment.Application.Contracts.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace RTT.Assessment.Application.Features.Contact.Queries.GetAllContact
+namespace RTT.Assessment.Application.Features.Contact.Queries.GetAllContact;
+
+public class GetAllContactQueriesHandler : IRequestHandler<GetAllContactQueries, IEnumerable<ContactDto>>
 {
-    public class GetAllContactQueriesHandler : IRequestHandler<GetAllContactQueries, IEnumerable<ContactDto>>
+    private readonly IContactRepository _contactRepository;
+    private readonly IMapper _mapper;
+
+    public GetAllContactQueriesHandler(IContactRepository contactRepository, IMapper mapper)
     {
-        private readonly IContactRepository _contactRepository;
-        private readonly IMapper _mapper;
+        _contactRepository = contactRepository;
+        _mapper = mapper  ;
+    }
+    public async Task<IEnumerable<ContactDto>> Handle(GetAllContactQueries request, CancellationToken cancellationToken)
+    {
+        var contacts = await _contactRepository.GetAllAsync( cancellationToken );
 
-        public GetAllContactQueriesHandler(IContactRepository contactRepository, IMapper mapper)
-        {
-            _contactRepository = contactRepository;
-            _mapper = mapper  ;
-        }
-        public async Task<IEnumerable<ContactDto>> Handle(GetAllContactQueries request, CancellationToken cancellationToken)
-        {
-            var contacts = await _contactRepository.GetAllAsync( cancellationToken );
+        var contactDtos = _mapper.Map<IEnumerable<ContactDto>>(contacts);
 
-            var contactDtos = _mapper.Map<IEnumerable<ContactDto>>(contacts);
+        return contactDtos;
 
-            return contactDtos;
-
-        }
     }
 }

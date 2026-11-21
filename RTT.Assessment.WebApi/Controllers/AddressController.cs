@@ -1,11 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RTT.Assessment.Application.Features.Address.Commands.CreateAddress;
+using RTT.Assessment.Application.Features.Address.Commands.DeleteAddress;
+using RTT.Assessment.Application.Features.Address.Commands.UpdateAddress;
 using RTT.Assessment.Application.Features.Address.Queries;
-using RTT.Assessment.Application.Features.Contact.Commands.CreateContact;
-using RTT.Assessment.Application.Features.Contact.Queries;
-using RTT.Assessment.Application.Features.Contact.Queries.GetAllContact;
-using RTT.Assessment.Application.Features.Contact.Queries.GetPersonContactDetails;
+using RTT.Assessment.Application.Features.Address.Queries.GetAllAddressQueries;
 
 namespace RTT.Assessment.WebApi.Controllers
 {
@@ -23,23 +22,23 @@ namespace RTT.Assessment.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<AddressDto>>> Get()
         {
-            var contacts = await _mediator.Send(new GetAllContactQueries());
+            var address = await _mediator.Send(new GetAllAddressQueries());
 
-            return Ok(contacts);
+            return Ok(address);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{addressId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AddressDto>> Get(int id)
+        public async Task<ActionResult<AddressDto>> Get(int addressId)
         {
-            var contact = await _mediator.Send(new GetContactDetailsQueries { Id = id });
+            var address = await _mediator.Send(new GetAllAddressQueries { Id = addressId });
 
-            if (contact == null)
+            if (address == null)
             {
                 return NotFound();
             }
 
-            return Ok(contact);
+            return Ok(address);
         }
 
         [HttpPost("createaddress")]
@@ -51,5 +50,30 @@ namespace RTT.Assessment.WebApi.Controllers
             var response = await _mediator.Send(contactCommand);
             return CreatedAtAction(nameof(Get), new { id = response });
         }
+
+
+        
+         [HttpPut("updateaddress")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> Put(UpdateAddressCommand addressCommand)
+        {
+            await _mediator.Send(addressCommand);
+            return NoContent();
+        }
+
+        [HttpDelete("{addressId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> Delete(int addressId)
+        {
+            var command = new DeleteAddressCommand { Id = addressId };
+            await _mediator.Send(command);
+            return NoContent();
+        }
+         
     }
 }

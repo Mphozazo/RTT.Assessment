@@ -5,9 +5,7 @@ using RTT.Assessment.Application.Exceptions;
 using RTT.Assessment.Application.Features.Address.Queries;
 using RTT.Assessment.Application.Features.Contact.Queries;
 using RTT.Assessment.Application.Features.Person.Queries;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Serilog;
 
 namespace RTT.Assessment.Application.Features.Reports
 {
@@ -27,23 +25,32 @@ namespace RTT.Assessment.Application.Features.Reports
         }
         public async Task<PersonReportDto> Handle(GeneratePersonReportCommnd request, CancellationToken cancellationToken)
         {
-            var person = _personRepository.GetByIdAsync(request.PersonId, cancellationToken).Result;
-            if (person == null)
-                throw new NotFoundException($"Person with ID {request.PersonId} not found.");
-
-            // compile all related Person Information including Address and Contact details into a PersonReportDto
-            var addresses = _addressRepository.GetPersonAddressesDetailsAsync(request.PersonId, cancellationToken).Result;
-            var contacts = _contactRepository.GetPersonContactDetailsAsync(request.PersonId, cancellationToken).Result;
-            var personReportDto = new PersonReportDto
+            try
             {
-                PersonId = person.Id,
-                personDto = _mapper.Map<PersonDto>(person),
-                addressDtos = _mapper.Map<IEnumerable<AddressDto>>(addresses),
-                contactDtos  = _mapper.Map<IEnumerable<ContactDto>>(contacts)
-            };
+                var person = _personRepository.GetByIdAsync(request.PersonId, cancellationToken).Result;
+                if (person == null)
+                    throw new NotFoundException($"Person with ID {request.PersonId} not found.");
 
-            
-            return  personReportDto;
+                // compile all related Person Information including Address and Contact details into a PersonReportDto
+                var addresses = _addressRepository.GetPersonAddressesDetailsAsync(request.PersonId, cancellationToken).Result;
+                var contacts = _contactRepository.GetPersonContactDetailsAsync(request.PersonId, cancellationToken).Result;
+                var personReportDto = new PersonReportDto
+                {
+                    PersonId = person.Id,
+                    personDto = _mapper.Map<PersonDto>(person),
+                    addressDtos = _mapper.Map<IEnumerable<Address.Queries.AddressDto>>(addresses),
+                    contactDtos = _mapper.Map<IEnumerable<Contact.Queries.ContactDto>>(contacts)
+                };
+
+
+                return personReportDto;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error occurred while handling GeneratePersonReportCommnd");
+                throw;
+            }
+           
 
         }
     }

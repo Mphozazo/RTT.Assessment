@@ -2,6 +2,7 @@
 using MediatR;
 using RTT.Assessment.Application.Contracts.Persistence;
 using RTT.Assessment.Application.Exceptions;
+using Serilog;
 
 namespace RTT.Assessment.Application.Features.Person.Commands.DeletePerson;
 
@@ -18,12 +19,21 @@ public class DeletePersonCommandHandler : IRequestHandler<DeletePersonCommand, U
 
     public async Task<Unit> Handle(DeletePersonCommand request, CancellationToken cancellationToken)
     {
-        var person = await _personRepository.GetByIdAsync(request.Id, cancellationToken);
+        try
+        {
+            var person = await _personRepository.GetByIdAsync(request.Id, cancellationToken);
 
-        if (person == null)
-            throw new NotFoundException(nameof(Person), request.Id);
+            if (person == null)
+                throw new NotFoundException(nameof(Person), request.Id);
 
-        await _personRepository.DeleteAsync(person, cancellationToken);
-        return Unit.Value;
+            await _personRepository.DeleteAsync(person, cancellationToken);
+            return Unit.Value;
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Error occurred while handling DeletePersonCommand");
+            throw;
+        }
+
     }
 }

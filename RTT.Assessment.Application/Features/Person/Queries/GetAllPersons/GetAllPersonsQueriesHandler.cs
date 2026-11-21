@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using RTT.Assessment.Application.Contracts.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Serilog;
 
 namespace RTT.Assessment.Application.Features.Person.Queries.GetAllPersons;
 
@@ -18,8 +17,17 @@ public class GetAllPersonsQueriesHandler : IRequestHandler<GetAllPersonsQueries,
     }
     public async Task<IEnumerable<PersonDto>> Handle(GetAllPersonsQueries request, CancellationToken cancellationToken)
     {
-        var persons = await _personRepository.GetAllAsync(cancellationToken);
-        return _mapper.Map<IEnumerable<PersonDto>>(persons);
+        try
+        {
+            var persons = await _personRepository.GetAllAsync(cancellationToken);
+            return _mapper.Map<IEnumerable<PersonDto>>(persons);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Error occurred while handling GetAllPersonsQueries");
+            throw;
+        }
+
     }   
 
 }

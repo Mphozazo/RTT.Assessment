@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Dapper.Contrib.Extensions;
 using RTT.Assessment.Application.Contracts.Persistence;
 using RTT.Assessment.Domain.Common;
 using RTT.Assessment.Persistence.EntityMappingHelper;
