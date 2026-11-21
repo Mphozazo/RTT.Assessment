@@ -18,7 +18,7 @@ namespace RTT.Assessment.WebApi.Controllers
         {
             _mediator = mediator;
         }
-
+        
         [HttpGet]
         public async Task<ActionResult<List<ContactDto>>> Get()
         {
@@ -27,11 +27,11 @@ namespace RTT.Assessment.WebApi.Controllers
             return Ok(contacts);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{contactId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ContactDto>> Get(int id)
+        public async Task<ActionResult<ContactDto>> Get(int contactId)
         {
-            var contact = await _mediator.Send(new GetContactDetailsQueries { Id = id });
+            var contact = await _mediator.Send(new GetContactDetailsQueries { Id = contactId });
 
             if (contact == null)
             {
@@ -62,13 +62,13 @@ namespace RTT.Assessment.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{contactId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int contactId)
         {
-            var command = new DeleteContactCommand { Id = id };
+            var command = new DeleteContactCommand { Id = contactId };
             await _mediator.Send(command);
             return NoContent();
         }

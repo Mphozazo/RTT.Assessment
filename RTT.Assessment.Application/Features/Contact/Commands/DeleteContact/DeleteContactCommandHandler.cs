@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using RTT.Assessment.Application.Contracts.Persistence;
 using RTT.Assessment.Application.Exceptions;
+using Serilog;
 
 namespace RTT.Assessment.Application.Features.Contact.Commands.DeleteContact
 {
@@ -26,8 +27,7 @@ namespace RTT.Assessment.Application.Features.Contact.Commands.DeleteContact
             }
             catch (Exception ex)
             {
-                // log the error on error log 
-                
+                Log.Error(ex, "Error occurred while handling DeleteContactCommand");
                 throw;
             }
 

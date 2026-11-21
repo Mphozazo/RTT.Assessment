@@ -2,10 +2,8 @@
 using MediatR;
 using RTT.Assessment.Application.Contracts.Persistence;
 using RTT.Assessment.Application.Exceptions;
-using RTT.Assessment.Application.Features.Contact.Commands.Shared;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using RTT.Assessment.Application.Features.Contact.Shared;
+using Serilog;
 
 namespace RTT.Assessment.Application.Features.Contact.Commands.CreateContact
 {
@@ -24,7 +22,7 @@ namespace RTT.Assessment.Application.Features.Contact.Commands.CreateContact
         public async Task<int> Handle(CreateContactCommand request,CancellationToken cancellationToken)
         {
             try {
-                var contactValidation = new CreateBaseContactCommandValidator(_personRepository);
+                var contactValidation = new CreateBaseContactCommandValidator();
                 var validationResult = await contactValidation.ValidateAsync(request, cancellationToken);
                 if (validationResult.Errors.Any())
                     throw new BadRequestException("Invalid Contact Request", validationResult);
@@ -38,7 +36,7 @@ namespace RTT.Assessment.Application.Features.Contact.Commands.CreateContact
             }
             catch (Exception ex)
             {
-                // log to Serilog file
+                Log.Error(ex, "Error occurred while handling CreateContactCommand");
                 throw ;
             }   
            

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using RTT.Assessment.Application.Contracts.Persistence;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +19,16 @@ public class GetPersonDetailsQueriesHandler : IRequestHandler<GetPersonDetailsQu
     }
     public async Task<PersonDto> Handle(GetPersonDetailsQueries request, CancellationToken cancellationToken)
     {
-        var person = await _personRepository.GetByIdAsync(request.Id, cancellationToken);
-        return _mapper.Map<PersonDto>(person);  
+        try
+        {
+            var person = await _personRepository.GetByIdAsync(request.Id, cancellationToken);
+            return _mapper.Map<PersonDto>(person);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Error occurred while handling GetPersonDetailsQueries");
+            throw ;
+        }
+ 
     }
 }

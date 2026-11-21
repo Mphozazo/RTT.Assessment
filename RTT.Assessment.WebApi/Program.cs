@@ -1,5 +1,6 @@
 using RTT.Assessment.Application;
 using RTT.Assessment.Persistence;
+using RTT.Assessment.WebApi;
 using RTT.Assessment.WebApi.Middleware;
 using Serilog;
 try
@@ -30,12 +31,14 @@ try
         });
     });
 
-    // RTT service registration for each layer
+    // RTT service registration for each layer and other services
     //builder.Services.AddInfrastructureServices(builder.Configuration);
     builder.Services.AddApplicationServiceRegistration();
     builder.Services.AddPersistenceServiceRegistration(builder.Configuration);
+    builder.Services.AddExcelBuilderRegisterServices();
 
-   
+
+
     // Add services to the container.
     var app = builder.Build();
 

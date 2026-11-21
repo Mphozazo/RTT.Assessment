@@ -2,6 +2,7 @@
 using MediatR;
 using RTT.Assessment.Application.Contracts.Persistence;
 using RTT.Assessment.Application.Exceptions;
+using Serilog;
 
 namespace RTT.Assessment.Application.Features.Person.Commands.CreatePerson
 {
@@ -34,7 +35,7 @@ namespace RTT.Assessment.Application.Features.Person.Commands.CreatePerson
             }
             catch (Exception ex)
             {
-                // will log to Serilog file
+                 Log.Error(ex, "Error occurred while handling CreatePersonCommand");
                 throw;
             }
         }
