@@ -9,6 +9,8 @@ namespace RTT.Assessment.Application.Features.Contact.Shared
         public string? PhoneNumber { get; set; }
         public string? CellNumber { get; set; }
         [JsonIgnore]
+        public int PersonId { get; set; }
+        [JsonIgnore]
         public DateTime DateCreated { get; set; }
         [JsonIgnore]
         public DateTime DateUpdated { get; set; }
